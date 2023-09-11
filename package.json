@@ -6,8 +6,15 @@
 	"license": "GNUv3",
 	"repository": {
 		"type": "git",
-		"url": "git://github.com/avidys/s-file-load.git"
+		"url": "https://gitlab.com/s-library/s-file-load.git"
 	  },
+	  "keywords": [
+		"svelte",
+		"component",
+		"file"
+	  ],
+	"homepage": "https://github.com/s-library/s-file-load.git",
+  
 	"scripts": {
 		"dev": "vite dev",
 		"build": "vite build && npm run package",
