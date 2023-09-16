@@ -21,80 +21,69 @@
             flex: 0.6;
         }
 
-
 	*/	
-	// https://svelte.dev/examples/file-inputs
-	//	import { content } from '$lib/store'; // store file content
+	import { onMount } from 'svelte';
+	import { accept, readFile } from '$lib/common';
 
+	export let files: FileList | undefined = undefined;
+
+	export let label: string = "Select a file to load";
 	export let multiple: boolean = false;
-	export let showResult: boolean = false; // display result in component 
+	export let showResult: boolean = false;  
 	export let showContent: boolean = false; // display result in component 
 	export let content: string = ""; // result
     
-	let files: FileList;
+	let myInput;//: HTMLPreElement;
+
+	//onMount(() => {
+	//	myInput.innerHTML = 'Nothing!';
+	//});
+
+
+	//let files: FileList;
 	let loadInput: HTMLInputElement;
 
 	$: if (files) {
 		// Note that `files` is of type `FileList`, not an Array:
 		// https://developer.mozilla.org/en-US/docs/Web/API/FileList
-		// console.log(files);
-
+		console.log("####",files);
 	    content = "";
 		for (const file of files) {
+//			if (Config._DEBUG)
+			readFile(file, myInput);
 			console.log(`${file.name}: ${file.size} bytes`);
-			readFile(file);
 		}
 
 	}
 
-	function readFile (file: Blob) {
-		if (file) {
-			var reader = new FileReader();
-			reader.readAsText(file, "UTF-8");
-			reader.onload = function (evt) {
-				if (evt && evt.target && evt.target.result) {
-					content += evt.target.result.toString() + "\n\n";
-				}
-				else {
-					// content = "";
-					// content.set(""); // same as $content = ""
-				}
-			}
-			reader.onerror = function (evt) {
-				content += "### Error reading file " + file.name;
-			}
-		}
-	}
-	
-	// handle customized button
-	function handleClick(event: MouseEvent & { currentTarget: EventTarget & HTMLButtonElement; }) {
-		loadInput.click()
-	}
+
+	// function handleClick(event: MouseEvent & { currentTarget: EventTarget & HTMLButtonElement; }) {
+
+  function keydown(ev: KeyboardEvent) {
+    if ([' ', 'Enter'].includes(ev.key)) {
+      ev.preventDefault();
+	  loadInput.click()
+    }
+  }
+
 </script>
 
-<div class="fileInput">
-	<input
-		accept="application/x-yml, text/yaml"
+<button id="fileSelect" type="button" class="fileInput" style="border-width: 1px; padding-top: 0.5rem; padding-bottom: 0.5rem" 
+		on:keydown={keydown} on:focus on:blur on:mouseenter on:mouseleave on:mouseover on:dragenter on:dragleave on:dragover on:drop>
+	<label style="padding-left:.4rem; display: flex; flex-direction: column" tabIndex="0">
+		{label}
+		<input
+		accept={accept}
 		bind:files
 		bind:this={loadInput}
 		id="yaml"
 		name="yaml"
 		type="file"
 		{multiple}
+		on:change on:click 
 		style="display:none" />
-	<button on:click={handleClick} id="fileSelect" type="button">Select a YAML file to load</button>
-	<!-- 
-	<input
-		accept="application/x-yml, text/yaml"
-		bind:files
-		id="yaml"
-		name="yaml"
-		type="file"
-		{multiple}
-		class="visually-hidden" />
-	<label for="yaml">Select some files</label>
-	-->
-</div>
+	</label>
+</button>
 
 {#if showResult}
 	<div class="table-viewport">
@@ -110,12 +99,12 @@
 					{/each}
 				</tbody>
 			</table>
-			<p>{files[0].name}</p>
 			<!-- <div style="white-space: pre-wrap; font-family:monospace;">content</div> -->
             {#if showContent}
-    			<pre style='margin:.5rem; width=100%; height=10rem;'>{content}</pre>
-                {/if}
-            {:else}
+    			<br/>
+				<pre style='margin:.5rem; width=100%; height=10rem;' bind:this={myInput}></pre>
+            {/if}
+        {:else}
 			<p>No file selected</p>
 		{/if}
 	</div>
@@ -136,20 +125,6 @@
 		white-space: -o-pre-wrap;
 		word-wrap: break-word;
 	}	
-/* 	.visually-hidden {
-		position: absolute !important;
-		height: 1px;
-		width: 1px;
-		overflow: hidden;
-		clip: rect(1px, 1px, 1px, 1px);
-		border: 1px;
-	}
-
-	label {
-		outline: thin dotted;
-		border: 1px;
-		padding: .5rem;
-	} */
 
 	.fileInput {
 		position: relative;
@@ -175,10 +150,9 @@
 		padding:.25rem;
 	}
 	
-
 	.table-viewport {
-		width: 100%;
-		height: 100%;
+		display: flex;
+		
 		/*overflow: hidden;
 		position: relative;*/
 	}

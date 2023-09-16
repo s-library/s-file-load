@@ -1,16 +1,18 @@
 # s-file-load
 
-## Simple file upload Svelte component
+Simple file upload Svelte component.
+
+Features:
+ - No dependencies
+ - No CSS library: ready to use with no overhead
+ - Click or drag-and-drop
+ - Customizable: label, theme, post-upload actions
+ - Return file content in variable or store
+ - use cases: read config file or other small files
+ - example of parsing JSON, YAML, or XML directly to JS objects
  - Created following (https://kit.svelte.dev/docs/packaging).
- - npm create svelte@latest my-app
- - Everything inside `src/lib` is part of your library, everything inside `src/routes` can be used as a showcase or preview app.
+ - Using ```npm create svelte@latest my-app```
 
-## Test
- - pnpm dev
- - pnpm build
- - pnpm preview
-
-## Deployment
- - https://kit.svelte.dev/docs/adapters
- - npm run package
- - npm publish --access public
+```
+pnpm i s-file-load
+```
