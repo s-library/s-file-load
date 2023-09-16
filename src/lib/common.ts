@@ -20,7 +20,7 @@
 
     //const text = await file.text();
 	export async function readFile (file: File, content: HTMLPreElement) {
-        content.innerHTML = ""
+        content.innerHTML = "";
         //return await file.text();
 		if (file) {
 			var reader = new FileReader();
