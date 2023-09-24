@@ -1,3 +1,6 @@
+![npm](https://img.shields.io/npm/v/s-file-load?label=Last%20version) 
+[![Image](https://img.shields.io/badge/any_text-you_like-blue "Caption")](https://img.shields.io/badge/any_text-you_like-blue)
+
 # s-file-load
 
 ## Simple file upload Svelte component

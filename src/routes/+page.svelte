@@ -27,6 +27,8 @@
     }
  </script>
 
+<img src="https://img.shields.io/npm/v/s-file-load?label=Last%20version"/>
+
 <p>No output</p>
 <div class=section>
     <LoadFile bind:content={content} showResult={false} showContent={false} multiple={false} on:change={onChangeHandler} />

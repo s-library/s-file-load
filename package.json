@@ -1,6 +1,6 @@
 {
 	"name": "s-file-load",
-	"version": "0.4.0",
+	"version": "0.5.0",
 	"author": "Jean M. <avidys@gmail.com>",
 	"description": "Svelte rudimentary bare-bone file loader without any CSS dependency.",
 	"license": "GNUv3",
@@ -8,13 +8,22 @@
 		"type": "git",
 		"url": "https://github.com/s-library/s-file-load.git"
 	  },
-	  "keywords": [
+	"keywords": [
 		"svelte",
 		"component",
 		"file"
 	  ],
+	"funding": [
+		  {
+			"type" : "patreon",
+			"url" : "https://www.patreon.com/avidys"
+		  }
+		],
 	"homepage": "https://github.com/s-library/s-file-load.git",
-  
+	"bugs": {
+		"url": "https://github.com/s-library/s-file-load.git/issues",
+		"email": "avidys@gmail.com"
+	  },  
 	"scripts": {
 		"dev": "vite dev",
 		"build": "vite build && npm run package",
