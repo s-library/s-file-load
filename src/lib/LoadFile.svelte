@@ -23,7 +23,7 @@
 
 	*/	
 	import { onMount } from 'svelte';
-	import { accept, readFile } from '$lib/common';
+	import { ACCEPT, Config, readFile } from '$lib/common.js';
 
 	export let files: FileList | undefined = undefined;
 
@@ -33,7 +33,7 @@
 	export let showContent: boolean = false; // display result in component 
 	export let content: string = ""; // result
     
-	let myInput;//: HTMLPreElement;
+	let myInput: HTMLPreElement;
 
 	//onMount(() => {
 	//	myInput.innerHTML = 'Nothing!';
@@ -49,9 +49,9 @@
 		console.log("####",files);
 	    content = "";
 		for (const file of files) {
-//			if (Config._DEBUG)
+			if (Config._DEBUG)
+				console.log(`${file.name}: ${file.size} bytes`);
 			readFile(file, myInput);
-			console.log(`${file.name}: ${file.size} bytes`);
 		}
 
 	}
@@ -73,7 +73,7 @@
 	<label style="padding-left:.4rem; display: flex; flex-direction: column" tabIndex="0">
 		{label}
 		<input
-		accept={accept}
+		accept={ACCEPT}
 		bind:files
 		bind:this={loadInput}
 		id="yaml"

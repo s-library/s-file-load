@@ -1,6 +1,6 @@
 <script lang="ts">
   	import { createEventDispatcher } from 'svelte';
-  	import { accept, boxCSSsize } from '$lib/common';
+  	import { Config, ACCEPT, boxCSSsize } from '$lib/common.js';
 
 
 	  // bind to files from JS
@@ -17,7 +17,7 @@
     export let theme: boolean = false;
 	  // $: cssVarStyles = `--note-color:${noteColor}; --note-bg-color:${noteBgColor}`;
 
-    export let filesArray: [File] = [];
+    export let filesArray: Array<File> = [];
     let input: HTMLInputElement;
   	const dispatch = createEventDispatcher();
     let background = "#F9FAFB";
@@ -31,32 +31,40 @@
       }
     }
 
-    function dropHandler (event) {
+    function dropHandler (event: DragEvent | null) {
       filesArray = [];
-      event.preventDefault();
-      if (event.dataTransfer.items) {
-        console.log("drop dataTransfer.items");
-        let files = [...event.dataTransfer.items];
-        files.forEach((item, i) => {
-          // if (data[i].kind === "string" && data[i].type.match("^text/plain"))
-          if (item.kind === 'file') {
-            const file = item.getAsFile();
-            console.log(`… file[${i}].name = ${file.name}`, file);
-            filesArray.push(file);
+      if (event) {
+        event.preventDefault();
+        if (event.dataTransfer) {
+          if (event.dataTransfer.items) {
+            if (Config._DEBUG) 
+              console.log("drop dataTransfer.items");
+            let files = [...event.dataTransfer.items];
+            files.forEach((item, i) => {
+              // if (data[i].kind === "string" && data[i].type.match("^text/plain"))
+              if (item.kind === 'file') {
+                const file = item.getAsFile();
+                if (file) {
+                  if (Config._DEBUG) 
+                    console.log(`… file[${i}].name = ${file.name}`, file);
+                  filesArray.push(file);
+                }
+              }
+              //content = filesArray;
+            })
+          } else {
+            if (event.dataTransfer.files) {
+              console.log("drop dataTransfer.files");
+              let files = event.dataTransfer.files;
+              let file = files && files[0];
+              if (file) {
+                console.log("drop api2",file);
+                filesArray = [file]
+              }  
+            } else {
+              console.log("drop api?",event);
+            }
           }
-          //content = filesArray;
-        });
-      } else {
-        if (event.dataTransfer.files) {
-          console.log("drop dataTransfer.files");
-          let files = event.dataTransfer.files;
-          let file = files && files[0];
-          if (file) {
-            console.log("drop api2",file);
-            filesArray = [file]
-          }  
-        } else {
-          console.log("drop api?",event);
         }
       }
       console.log("drop",filesArray);
@@ -72,8 +80,8 @@
 	    content = "";
       filesArray = []
       for (const file of files) {
-          // if (Config._DEBUG)
-          console.log(`${file.name}: ${file.size} bytes`);
+          if (Config._DEBUG)
+            console.log(`${file.name}: ${file.size} bytes`);
           filesArray.push(file)
         //readFile(file);
       }
@@ -93,7 +101,7 @@
         let ret = "";
         for (const file of filesArray) {
           if (ret) ret += ', '
-          ret += `${filesArray.name}`;
+          ret += `${file.name}`;
         }
         ret = filesArray.length+" files: " + ret;
         //if (ret.length > 40)
@@ -102,18 +110,19 @@
       } else return "";
     }
 
-    function fileDetail (file) {
-      return `${file.name} ${file.path} ${file.size} ${file.type} ${file.lastModifiedDate}`
+    function fileDetail (file: File) {
+      return `${file.name} ${file.size} ${file.type} ${file.lastModified}` //${file.path} 
     } 
 
-    function dragOverEvent(event) {
+    function dragOverEvent(event: DragEvent) {
       event.preventDefault()
     }
-  </script>
+</script>
 
 <!-- on:change={changeHandler} -->
 <div class="drop-section">
-    <button type="button" class="drop-area" style="{theme?background='black':background='white'};background-color={background};{boxCSSsize[boxSize]}"
+    <button type="button" class="drop-area" 
+      style="{theme?background='black':background='white'};background-color={background};{boxCSSsize[boxSize]}"
           on:keydown={keydown} 
           on:drop={dropHandler} 
           on:dragover={dragOverEvent}
@@ -125,7 +134,7 @@
                viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
             <path d="M10 13L14 17M14 13L10 17M13 3H8.2C7.0799 3 6.51984 3 6.09202 3.21799C5.71569 3.40973 5.40973 3.71569 5.21799 4.09202C5 4.51984 5 5.0799 5 6.2V17.8C5 18.9201 5 19.4802 5.21799 19.908C5.40973 20.2843 5.71569 20.5903 6.09202 20.782C6.51984 21 7.0799 21 8.2 21H15.8C16.9201 21 17.4802 21 17.908 20.782C18.2843 20.5903 18.5903 20.2843 18.782 19.908C19 19.4802 19 18.9201 19 17.8V9M13 3L19 9M13 3V7.4C13 7.96005 13 8.24008 13.109 8.45399C13.2049 8.64215 13.3578 8.79513 13.546 8.89101C13.7599 9 14.0399 9 14.6 9H19" />
           </svg>
-          <p class="drop-area-nofile">{showFiles(filesArray)}</p>
+          <p class="drop-area-nofile">{showFiles()}</p>
         {:else}
           <svg aria-hidden="true" class="svg-style" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" 
                viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">

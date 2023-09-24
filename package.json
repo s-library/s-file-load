@@ -7,23 +7,23 @@
 	"repository": {
 		"type": "git",
 		"url": "https://github.com/s-library/s-file-load.git"
-	  },
+	},
 	"keywords": [
 		"svelte",
 		"component",
 		"file"
-	  ],
+	],
 	"funding": [
-		  {
-			"type" : "patreon",
-			"url" : "https://www.patreon.com/avidys"
-		  }
-		],
+		{
+			"type": "patreon",
+			"url": "https://www.patreon.com/avidys"
+		}
+	],
 	"homepage": "https://github.com/s-library/s-file-load.git",
 	"bugs": {
 		"url": "https://github.com/s-library/s-file-load.git/issues",
 		"email": "avidys@gmail.com"
-	  },  
+	},
 	"scripts": {
 		"dev": "vite dev",
 		"build": "vite build && npm run package",

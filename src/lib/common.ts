@@ -1,4 +1,4 @@
-    /*** Parent Element for upload presentation DropFile and LoadFile
+    /*** Parent Element for DropFile and LoadFile
      * Define common properties and styles
 	 * https://svelte.dev/examples/file-inputs
 	 * TODO: possibility to use a store as: import { content } from '$lib/store'; // store file content
@@ -9,7 +9,7 @@
      */
 
     // Default accept to text files
-	export const accept = "text/plain, text/csv, text/html, text/css, application/xml, text/xml, text/yaml, text/javascript, application/json, application/rtf, text/plain;charset=UTF-8";
+	export const ACCEPT = "text/plain, text/csv, text/html, text/css, application/xml, text/xml, text/yaml, text/javascript, application/json, application/rtf, text/plain;charset=UTF-8";
 
     export const boxCSSsize = {
         small: 'width: 16rem; height: 10rem',
@@ -17,6 +17,8 @@
         big: 'width: 32rem; height: 16rem',
         xbig: 'width: 56rem; height: 28rem'
     };
+
+    export const Config = { _DEBUG: false}
 
     //const text = await file.text();
 	export async function readFile (file: File, content: HTMLPreElement) {
