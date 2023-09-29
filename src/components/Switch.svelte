@@ -9,26 +9,22 @@
     export let label: string;
     export let options: Array<string> = [];
 	export let fontSize: number = 16;
-	export let value: string = 'on';
-
-    let checked = true;
+	export let value: string = options[0];
 
 	const uniqueID = Math.floor(Math.random() * 100);
-
-	function onSwitch(e:Event){
-        console.log(value)
-    }
 </script>
 
-<div class="s--multi">
+<div class="s--multi" {...$$restProps}>
     <div role='radiogroup'
 				 class="group-container"
 				 aria-labelledby={`label-${uniqueID}`}
 				 style="font-size:{fontSize}px" 
-				 id={`group-${uniqueID}`}>
+				 id={`group-${uniqueID}`}
+                 tabindex=0
+                 >
         <div class='legend' style="font-size:{fontSize+2}px"  id={`label-${uniqueID}`}>{label}</div>
-        {#each options as option}
-            <input type="radio" id={`${option}-${uniqueID}`} value={option} bind:group={value} on:click={onSwitch} />
+        {#each options as option,i}
+            <input type="radio" id={`${option}-${uniqueID}`} value={option} bind:group={value} tabindex={i+1} />
             <label for={`${option}-${uniqueID}`}>
                 {option}
             </label> 
@@ -53,10 +49,9 @@
 
     .legend {
         margin-right: .5rem;
-        margin-top: .1rem;
-        margin-left: .2rem;
+        margin-top: .1rem;       
     }
- 
+
     /* Multi Design Option */
 
     /* Based on suggestions from Sara Soueidan https://www.sarasoueidan.com/blog/toggle-switch-design/

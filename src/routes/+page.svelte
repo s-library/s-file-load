@@ -5,6 +5,7 @@
     import TestContainer from '$components/TestContainer.svelte';
 //    import ThemeSwitcher from '$components/ThemeSwitcher.svelte';
     import Switch from '$components/Switch.svelte';
+    import { config } from '$lib/common.js';
 
     export let content: string = ''; // content of the file(s) selected
 
@@ -14,31 +15,36 @@
 
     //let debug="off";
     //$: debug=="off"?config.DEBUG=false:config.qDEBUG=true;
-
- </script>
+    let value: string;
+    $: if (value=="on") config.DEBUG=true;
+    else config.DEBUG=false;
+</script>
 
 <main>
 
     <img src="https://img.shields.io/npm/v/s-file-load?label=Last%20version" alt="Last Version"/>
-    <Switch label="Debug:" options={['off', 'on']} fontSize={14}/>
+    <p style="display:block">
+        <span style="margin-left:1rem">Use JS console to see debug {value} </span>
+        <Switch style="margin-left:1rem" label="Debug:" options={['off', 'on']} fontSize={14} bind:value={value}/>    
+    </p>
 
-    <p>No output</p>
     <div class=section>
+        <p style="padding-left:.3rem">No output</p>
         <LoadFile bind:content={content} showResult={false} showContent={false} multiple={false} on:change={onChangeHandler} />
     </div>
 
-    <p>Result</p>
     <div class=section>
+        <p style="padding-left:.3rem">Result</p>
         <LoadFile bind:content={content} showResult={true} showContent={false} multiple={false} on:change={onChangeHandler} />
     </div>
 
-    <p>Content</p>
     <div class=section>
+        <p style="padding-left:.3rem">Content</p>
         <LoadFile bind:content={content} showResult={false} showContent={true} multiple={false} on:change={onChangeHandler} />
     </div>
 
-    <p style="padding-left:.9rem">Result and Content</p>
     <div class=section>
+        <p style="padding-left:.3rem">Result and Content</p>
         <LoadFile bind:content={content} showResult={true} showContent={true} multiple={false} on:change={onChangeHandler} />
     </div>
 
@@ -59,6 +65,7 @@
     .section { 
         width:80%;
         border: 1px solid #666; 
+        margin-top: 1rem;
         margin-left: auto;
         margin-right: auto;
         overflow: auto;

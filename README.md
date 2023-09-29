@@ -4,7 +4,11 @@
 
 Simple file upload Svelte component.
 
-Non-exhaustive features:
+## Live demo
+
+https://s-file-load-khn1ohzvd-s-library.vercel.app/
+
+## Non-exhaustive features list:
  - No other dependencies 
  - No CSS library: ready to use with no overhead
  - Click or drag-and-drop
@@ -29,9 +33,10 @@ pnpm i s-file-load
 ```
 
 ## Examples of Code
+
 ```ts
 <script lang="ts">
-    import DropFile from '$lib/DropFile.svelte';
+    import { DropFile } from 's-file-load';
     let content: string = ''; // content of the file(s) selected
 </script>
 
@@ -42,6 +47,7 @@ pnpm i s-file-load
 ```
 
 ## Contact Us
+
  - through GITHUB
  
 ## TODO

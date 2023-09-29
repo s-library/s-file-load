@@ -1,6 +1,6 @@
 <script lang="ts">
     import Switch from '$components/Switch.svelte';
-    export let theme: string = "light"; // TODO read onmount
+    export let theme: string; // TODO read onmount
 
     let themeToggle: HTMLDivElement;
 

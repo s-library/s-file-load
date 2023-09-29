@@ -1,7 +1,7 @@
 <script lang="ts">
     import { config, boxCSSsize } from '$lib/common.js';
     import DropFile from '$lib/DropFile.svelte';
-    //import ThemeSwitcher from '$components/ThemeSwitcher.svelte';
+    import ThemeSwitcher from '$components/ThemeSwitcher.svelte';
 
     export let title: string = "Test";
 
@@ -30,7 +30,7 @@
 <div class="test-container">
     <div class="test-container-header">
         <span style="float:left">{title}</span>
-        <!-- pan style="padding-left: 3rem; float:left"><ThemeSwitcher  on:click={switchTheme}>{dark?"Dark":"Light"}</ThemeSwitcher></span -->
+        <span style="padding-left: 3rem; float:left"><ThemeSwitcher  on:click={switchTheme}>{dark?"Dark":"Light"}</ThemeSwitcher></span>
         <span style="float:right" role="button" tabindex="-1" on:keypress={switchSize} on:click={switchSize}>
             <button id="small" >Small</button> <button id="medium">Medium</button> <button id="big">Big</button> <button id="xbig">Huge</button>
         </span>
