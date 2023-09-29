@@ -1,6 +1,6 @@
 <script lang="ts">
   	import { createEventDispatcher } from 'svelte';
-  	import { Config, ACCEPT, boxCSSsize } from '$lib/common.js';
+  	import { config, ACCEPT, boxCSSsize } from '$lib/common.js';
 
 
 	  // bind to files from JS
@@ -37,7 +37,7 @@
         event.preventDefault();
         if (event.dataTransfer) {
           if (event.dataTransfer.items) {
-            if (Config._DEBUG) 
+            if (config.DEBUG) 
               console.log("drop dataTransfer.items");
             let files = [...event.dataTransfer.items];
             files.forEach((item, i) => {
@@ -45,7 +45,7 @@
               if (item.kind === 'file') {
                 const file = item.getAsFile();
                 if (file) {
-                  if (Config._DEBUG) 
+                  if (config.DEBUG) 
                     console.log(`… file[${i}].name = ${file.name}`, file);
                   filesArray.push(file);
                 }
@@ -80,7 +80,7 @@
 	    content = "";
       filesArray = []
       for (const file of files) {
-          if (Config._DEBUG)
+          if (config.DEBUG)
             console.log(`${file.name}: ${file.size} bytes`);
           filesArray.push(file)
         //readFile(file);

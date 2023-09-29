@@ -9,18 +9,36 @@
      */
 
     // Default accept to text files
-	export const ACCEPT = "text/plain, text/csv, text/html, text/css, application/xml, text/xml, text/yaml, text/javascript, application/json, application/rtf, text/plain;charset=UTF-8";
+	export const ACCEPT:string = "text/plain, text/csv, text/html, text/css, application/xml, text/xml, text/yaml, text/javascript, application/json, application/rtf, text/plain;charset=UTF-8";
 
-    export const boxCSSsize = {
+    export const boxCSSsize:any = {
         small: 'width: 16rem; height: 10rem',
         medium: 'width: 24rem; height: 12rem',
         big: 'width: 32rem; height: 16rem',
         xbig: 'width: 56rem; height: 28rem'
     };
-
-    export const Config = { _DEBUG: false}
+	//export const config = {DEBUG: true}
+    class Config {
+		DEBUG;
+		constructor () {
+			this.DEBUG = true;
+		}
+		/**
+		 * @param {boolean} value
+		 */
+		set (value:boolean ) { this.DEBUG = value; console.log(this.DEBUG) } 
+		set_debug () { this.DEBUG = true; console.log(this.DEBUG) } 
+		reset_debug () { this.DEBUG = false; console.log(this.DEBUG) }
+		get () { return this.DEBUG }  
+	}
+	
+	export const config = new Config();
 
     //const text = await file.text();
+	/**
+ 	* @param {File} file
+ 	* @param {HTMLPreElement} content
+ 	*/
 	export async function readFile (file: File, content: HTMLPreElement) {
         content.innerHTML = "";
         //return await file.text();

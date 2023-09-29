@@ -1,18 +1,27 @@
 <script lang="ts">
-    import { Config, boxCSSsize } from '$lib/common.js';
+    import { config, boxCSSsize } from '$lib/common.js';
     import DropFile from '$lib/DropFile.svelte';
- 
+    //import ThemeSwitcher from '$components/ThemeSwitcher.svelte';
+
     export let title: string = "Test";
 
-    let boxSize: keyof typeof boxCSSsize = 'medium';
+    let boxSize: keyof typeof boxCSSsize | any = 'medium';
     let dark: boolean = false;
 
-  
+    function switchTheme(e: Event) {
+        e.preventDefault();
+        if (e.target) {
+            dark = !dark;
+            if (config.DEBUG)
+                console.log(dark)
+        }
+    }
+
     function switchSize(e: Event) {
         e.preventDefault();
         if (e.target) {
             boxSize =  <keyof typeof boxCSSsize>(e.target as Element).id;
-            if (Config._DEBUG) 
+            if (config.DEBUG) 
                 console.log( boxCSSsize[boxSize] )
         }
     }
@@ -20,7 +29,8 @@
 
 <div class="test-container">
     <div class="test-container-header">
-        <span style="float:left">{title} <button style="margin-left:3rem;" on:click={() => (dark = !dark)}>{(dark?"Dark":"Light")}</button></span>
+        <span style="float:left">{title}</span>
+        <!-- pan style="padding-left: 3rem; float:left"><ThemeSwitcher  on:click={switchTheme}>{dark?"Dark":"Light"}</ThemeSwitcher></span -->
         <span style="float:right" role="button" tabindex="-1" on:keypress={switchSize} on:click={switchSize}>
             <button id="small" >Small</button> <button id="medium">Medium</button> <button id="big">Big</button> <button id="xbig">Huge</button>
         </span>

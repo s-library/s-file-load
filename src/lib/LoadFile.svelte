@@ -23,7 +23,7 @@
 
 	*/	
 	import { onMount } from 'svelte';
-	import { ACCEPT, Config, readFile } from '$lib/common.js';
+	import { ACCEPT, config, readFile } from '$lib/common.js';
 
 	export let files: FileList | undefined = undefined;
 
@@ -49,7 +49,7 @@
 		console.log("####",files);
 	    content = "";
 		for (const file of files) {
-			if (Config._DEBUG)
+			if (config.DEBUG)
 				console.log(`${file.name}: ${file.size} bytes`);
 			readFile(file, myInput);
 		}
