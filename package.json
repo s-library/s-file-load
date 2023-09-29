@@ -19,7 +19,7 @@
 			"url": "https://www.patreon.com/avidys"
 		}
 	],
-	"homepage": "https://s-file-load-khn1ohzvd-s-library.vercel.app/",
+	"homepage": "https://s-file-load.vercel.app/",
 	"bugs": {
 		"url": "https://github.com/s-library/s-file-load.git/issues",
 		"email": "avidys@gmail.com"
@@ -71,5 +71,8 @@
 	"svelte": "./dist/index.js",
 	"types": "./dist/index.d.ts",
 	"sideEffects": false,
-	"type": "module"
+	"type": "module",
+	"dependencies": {
+		"@sveltejs/adapter-vercel": "^3.0.3"
+	}
 }
